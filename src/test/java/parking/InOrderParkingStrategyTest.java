@@ -57,23 +57,13 @@ public class InOrderParkingStrategyTest {
         //given
         Car car = mock(Car.class);
         when(car.getName()).thenReturn("car name");
-        ParkingLot parkingLot = mock(ParkingLot.class);
-        when(parkingLot.getName()).thenReturn("Pname");
-        when(parkingLot.isFull()).thenReturn(true);
-        Receipt receipt = new Receipt();
-        receipt.setCarName("car name");
-        receipt.setParkingLotName(ParkingStrategy.NO_PARKING_LOT);
         InOrderParkingStrategy spyInOrderParkingStrategy = spy(new InOrderParkingStrategy());
-        doReturn(receipt).when(spyInOrderParkingStrategy).createNoSpaceReceipt(car);
 
         //when
-        spyInOrderParkingStrategy.park(Collections.singletonList(parkingLot), car);
+        spyInOrderParkingStrategy.park(null, car);
 
         //then
-        verify(parkingLot,
-                times(1)).isFull();
         verify(spyInOrderParkingStrategy, times(1)).createNoSpaceReceipt(car);
-        verify(spyInOrderParkingStrategy, times(0)).createReceipt(parkingLot, car);
     }
 
     @Test
