@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.util.Collections;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class VipParkingStrategyTest {
@@ -77,6 +77,17 @@ public class VipParkingStrategyTest {
          * You may refactor the code, or try to use
          * use @RunWith(MockitoJUnitRunner.class), @Mock (use Mockito, not PowerMock) and @InjectMocks
          */
+        //given
+        Car car = new Car("B");
+        CarDao carDao = mock(CarDao.class);
+        VipParkingStrategy spyVipParkingStrategy = spy(new VipParkingStrategy(carDao));
+        when(carDao.isVip(car.getName())).thenReturn(true);
+
+        //when
+        boolean allowOverPark = spyVipParkingStrategy.isAllowOverPark(car);
+
+        //then
+        assertFalse(allowOverPark);
     }
 
     @Test
