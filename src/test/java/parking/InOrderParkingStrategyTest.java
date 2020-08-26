@@ -2,14 +2,31 @@ package parking;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 public class InOrderParkingStrategyTest {
+
+    private InOrderParkingStrategy inOrderParkingStrategy = new InOrderParkingStrategy();
 
 	@Test
     public void testCreateReceipt_givenACarAndAParkingLog_thenGiveAReceiptWithCarNameAndParkingLotName() {
 
 	    /* Exercise 1, Write a test case on InOrderParkingStrategy.createReceipt()
 	    * With using Mockito to mock the input parameter */
+        //given
+        ParkingLot parkingLot = mock(ParkingLot.class);
+        when(parkingLot.getName()).thenReturn("Pname");
+        Car car = mock(Car.class);
+        when(car.getName()).thenReturn("Cname");
 
+        //when
+        Receipt receipt = inOrderParkingStrategy.createReceipt(parkingLot, car);
+
+        //then
+        assertEquals("Pname", receipt.getParkingLotName());
+        assertEquals("Cname", receipt.getCarName());
     }
 
     @Test

@@ -8,6 +8,7 @@ import org.apache.commons.collections.CollectionUtils;
 
 public class InOrderParkingStrategy implements ParkingStrategy {
 
+	@Override
 	public Receipt park(List<ParkingLot> parkingLots, Car car) {
 
 		parkingLots = Optional.ofNullable(parkingLots).orElse(new ArrayList<>());
@@ -29,7 +30,7 @@ public class InOrderParkingStrategy implements ParkingStrategy {
 		return ParkingLot.getBasicHourlyPrice();
 	}
 
-	private Receipt createReceipt(ParkingLot parkingLot, Car car) {
+	protected Receipt createReceipt(ParkingLot parkingLot, Car car) {
 		
 		Receipt receipt = new Receipt();
 		receipt.setCarName(car.getName());
