@@ -10,8 +10,8 @@ public class VipParkingStrategy implements ParkingStrategy {
 
 	CarDao carDao;
 
-	public VipParkingStrategy(){
-		carDao = new CarDaoImpl();
+	public VipParkingStrategy(CarDao carDao){
+		this.carDao = carDao;
 	}
 
 	@Override

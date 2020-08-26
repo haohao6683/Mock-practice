@@ -2,9 +2,9 @@ package parking;
 
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.Collections;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class VipParkingStrategyTest {
@@ -18,7 +18,7 @@ public class VipParkingStrategyTest {
         Car car = mock(Car.class);
         ParkingLot parkingLot = mock(ParkingLot.class);
         when(parkingLot.isFull()).thenReturn(true);
-        VipParkingStrategy spyVipParkingStrategy = spy(new VipParkingStrategy());
+        VipParkingStrategy spyVipParkingStrategy = spy(new VipParkingStrategy(null));
         doReturn(true).when(spyVipParkingStrategy).isAllowOverPark(car);
 
         //when
@@ -39,7 +39,7 @@ public class VipParkingStrategyTest {
         Car car = mock(Car.class);
         ParkingLot parkingLot = mock(ParkingLot.class);
         when(parkingLot.isFull()).thenReturn(true);
-        VipParkingStrategy spyVipParkingStrategy = spy(new VipParkingStrategy());
+        VipParkingStrategy spyVipParkingStrategy = spy(new VipParkingStrategy(null));
         doReturn(false).when(spyVipParkingStrategy).isAllowOverPark(car);
 
         //when
@@ -57,6 +57,17 @@ public class VipParkingStrategyTest {
          * You may refactor the code, or try to use
          * use @RunWith(MockitoJUnitRunner.class), @Mock (use Mockito, not PowerMock) and @InjectMocks
          */
+        //given
+        Car car = new Car("A");
+        CarDao carDao = mock(CarDao.class);
+        VipParkingStrategy spyVipParkingStrategy = spy(new VipParkingStrategy(carDao));
+        when(carDao.isVip(car.getName())).thenReturn(true);
+
+        //when
+        boolean allowOverPark = spyVipParkingStrategy.isAllowOverPark(car);
+
+        //then
+        assertTrue(allowOverPark);
     }
 
     @Test
