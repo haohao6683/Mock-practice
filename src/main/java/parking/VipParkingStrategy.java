@@ -14,6 +14,7 @@ public class VipParkingStrategy implements ParkingStrategy {
 		carDao = new CarDaoImpl();
 	}
 
+	@Override
 	public Receipt park(List<ParkingLot> parkingLots, Car car) {
 
 		parkingLots = Optional.ofNullable(parkingLots).orElse(new ArrayList<>());
@@ -30,7 +31,7 @@ public class VipParkingStrategy implements ParkingStrategy {
 		return createNoSpaceReceipt(car);
 	}
 
-	private Receipt createReceipt(ParkingLot parkingLot, Car car) {
+	protected Receipt createReceipt(ParkingLot parkingLot, Car car) {
 		
 		Receipt receipt = new Receipt();
 		receipt.setCarName(car.getName());
@@ -38,7 +39,7 @@ public class VipParkingStrategy implements ParkingStrategy {
 		return receipt;
 	}
 
-	private Receipt createNoSpaceReceipt(Car car) {
+	protected Receipt createNoSpaceReceipt(Car car) {
 		
 		Receipt receipt = new Receipt();
 		receipt.setCarName(car.getName());
@@ -46,7 +47,7 @@ public class VipParkingStrategy implements ParkingStrategy {
 		return receipt;
 	}
 
-	private boolean isAllowOverPark(Car car){
+	protected boolean isAllowOverPark(Car car){
 		return carDao.isVip(car.getName()) && StringUtils.contains(car.getName(), "A");
 	}
 
