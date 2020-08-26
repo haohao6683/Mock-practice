@@ -103,7 +103,19 @@ public class InOrderParkingStrategyTest {
     public void testPark_givenThereIsOneFullParkingLot_thenCreateReceipt(){
 
         /* Exercise 2: Test park() method. Use Mockito.spy and Mockito.verify to test the situation for one available parking lot but it is full */
+        Car car = mock(Car.class);
+        when(car.getName()).thenReturn("car name");
+        ParkingLot parkingLot = mock(ParkingLot.class);
+        when(parkingLot.getName()).thenReturn("Pname");
+        when(parkingLot.isFull()).thenReturn(true);
+        InOrderParkingStrategy spyInOrderParkingStrategy = spy(new InOrderParkingStrategy());
 
+        //when
+        spyInOrderParkingStrategy.park(Collections.singletonList(parkingLot), car);
+
+        //then
+        verify(spyInOrderParkingStrategy, times(1)).createNoSpaceReceipt(car);
+        verify(spyInOrderParkingStrategy, times(0)).createReceipt(parkingLot, car);
     }
 
     @Test
